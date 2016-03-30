@@ -3,30 +3,30 @@
 
 class Vector2 {
 public:
-	Vector2(double x, double y);
-	double Magnitude();
+	Vector2(float x, float y);
+	float Magnitude();
 	Vector2 Normalize();
-	double Dot(Vector2 v);
-	double AngleBetween(Vector2 v);
+	float Dot(Vector2 v);
+	float AngleBetween(Vector2 v);
 	Vector2 Project(Vector2 axis);
 
 	// Rotates around a specified point
-	void RotateAround(Vector2 origin, double rotation);
+	void RotateAround(Vector2 origin, float rotation);
 
 	Vector2 operator-();
 	Vector2 operator+(Vector2 v);
 	Vector2 operator-(Vector2 v);
-	Vector2 operator*(double multiple);
+	Vector2 operator*(float multiple);
 	Vector2 operator*(Vector2 v);
-	Vector2 operator/(double division);
+	Vector2 operator/(float division);
 	void operator+=(Vector2 v);
 	void operator-=(Vector2 v);
-	void operator*=(double multiple);
+	void operator*=(float multiple);
 	void operator*=(Vector2 v);
-	void operator/=(double division);
+	void operator/=(float division);
 
-	double x;
-	double y;
+	float x;
+	float y;
 };
 
 #endif//VECTOR2_HPP

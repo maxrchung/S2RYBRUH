@@ -2,11 +2,11 @@
 #include "Storyboard.hpp"
 #include <sstream>
 
-Sprite::Sprite(const std::string& filePath, Vector2 position, Vector2 size, double scale, Layer layer, Origin origin)
+Sprite::Sprite(const std::string& filePath, Vector2 position, Vector2 size, float scale, Layer layer, Origin origin)
 	: layer(layer), origin(origin), filePath(filePath), scale(scale), position(position), size(size * scale), rotation(0.0), color(Color::Color(0,0,0)) {
 	Storyboard::Instance()->sprites.push_back(this);
-	double halfWidth = size.x / 2;
-	double halfHeight = size.y / 2;
+	float halfWidth = size.x / 2;
+	float halfHeight = size.y / 2;
 	radius = sqrt(halfWidth * halfWidth + halfHeight * halfHeight);
 }
 
@@ -20,7 +20,7 @@ void Sprite::Move(int startTime, int endTime, int startX, int startY, int endX, 
 }
 
 // _F,<easing>,<starttime>,<endtime>,<start_opacity>,<end_opacity>
-void Sprite::Fade(int startTime, int endTime, double startOpacity, double endOpacity, Easing easing) {
+void Sprite::Fade(int startTime, int endTime, float startOpacity, float endOpacity, Easing easing) {
 	fade = endOpacity;
 	std::ostringstream command;
 	command << "_F," << easing << "," << startTime << "," << endTime << "," << startOpacity << "," << endOpacity;
@@ -28,7 +28,7 @@ void Sprite::Fade(int startTime, int endTime, double startOpacity, double endOpa
 }
 
 // _R,<easing>,<starttime>,<endtime>,<start_rotate>,<end_rotate>
-void Sprite::Rotate(int startTime, int endTime, double startRotate, double endRotate, Easing easing) {
+void Sprite::Rotate(int startTime, int endTime, float startRotate, float endRotate, Easing easing) {
 	rotation = endRotate;
 	std::ostringstream command;
 	command << "_R," << easing << "," << startTime << "," << endTime << "," << startRotate << "," << endRotate;
@@ -36,7 +36,7 @@ void Sprite::Rotate(int startTime, int endTime, double startRotate, double endRo
 }
 
 // _S,<easing>,<starttime>,<endtime>,<start_scale>,<end_scale>
-void Sprite::Scale(int startTime, int endTime, double startScale, double endScale, Easing easing) {
+void Sprite::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing) {
 	scale = endScale;
 	std::ostringstream command;
 	command << "_S," << easing << "," << startTime << "," << endTime << "," << startScale << "," << endScale;

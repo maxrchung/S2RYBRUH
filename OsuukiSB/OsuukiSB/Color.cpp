@@ -1,6 +1,6 @@
 #include "Color.hpp"
 
-Color::Color(double r, double g, double b) 
+Color::Color(float r, float g, float b) 
 	: r(r), g(g), b(b) {}
 
 bool Color::operator==(Color c) {

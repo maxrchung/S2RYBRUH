@@ -5,10 +5,10 @@
 
 class Color {
 public:
-	Color(double r, double g, double b);
-	double r;
-	double g;
-	double b;
+	Color(float r, float g, float b);
+	float r;
+	float g;
+	float b;
 	bool operator==(Color c);
 };
 

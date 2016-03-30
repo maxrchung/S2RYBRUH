@@ -1,28 +1,28 @@
 #include "Vector2.hpp"
 #include "math.h"
 
-Vector2::Vector2(double x, double y)
+Vector2::Vector2(float x, float y)
 	: x(x), y(y) {}
 
-double Vector2::Magnitude() {
+float Vector2::Magnitude() {
 	return sqrt(x * x + y * y);
 }
 
 Vector2 Vector2::Normalize() {
-	double mag = Magnitude();
+	float mag = Magnitude();
 	return Vector2(x / mag, y / mag);
 }
 
-double Vector2::Dot(Vector2 v) {
+float Vector2::Dot(Vector2 v) {
 	return x * v.x + y * v.y;
 }
 
-double Vector2::AngleBetween(Vector2 v) {
+float Vector2::AngleBetween(Vector2 v) {
 	if (this->Magnitude() == 0 || v.Magnitude() == 0) {
 		return 0;
 	}
 	else {
-		double dotProd = this->Dot(v);
+		float dotProd = this->Dot(v);
 		dotProd /= this->Magnitude() * v.Magnitude();
 		return acos(dotProd);
 	}
@@ -35,10 +35,10 @@ Vector2 Vector2::Project(Vector2 axis) {
 	return projection;
 }
 
-void Vector2::RotateAround(Vector2 origin, double rotation) {
+void Vector2::RotateAround(Vector2 origin, float rotation) {
 	Vector2 fromMid = *this - origin;
 	Vector2 unitVec(1, 0);
-	double angleFrom0 = fromMid.AngleBetween(unitVec);
+	float angleFrom0 = fromMid.AngleBetween(unitVec);
 	if (fromMid.y < 0) {
 		angleFrom0 *= -1;
 	}
@@ -62,7 +62,7 @@ Vector2 Vector2::operator-(Vector2 v) {
 	return Vector2(x - v.x, y - v.y);
 }
 
-Vector2 Vector2::operator*(double multiple) {
+Vector2 Vector2::operator*(float multiple) {
 	return Vector2(x * multiple, y * multiple);
 }
 
@@ -70,7 +70,7 @@ Vector2 Vector2::operator*(Vector2 v) {
 	return Vector2(x * v.x, y * v.y);
 }
 
-Vector2 Vector2::operator/(double division) {
+Vector2 Vector2::operator/(float division) {
 	return Vector2(x / division, y / division);
 }
 
@@ -84,7 +84,7 @@ void Vector2::operator-=(Vector2 v) {
 	y -= v.y;
 }
 
-void Vector2::operator*=(double multiple) {
+void Vector2::operator*=(float multiple) {
 	x *= multiple;
 	y *= multiple;
 }
@@ -94,7 +94,7 @@ void Vector2::operator*=(Vector2 v) {
 	y *= v.y;
 }
 
-void Vector2::operator/=(double division) {
+void Vector2::operator/=(float division) {
 	x /= division;
 	y /= division;
 }
