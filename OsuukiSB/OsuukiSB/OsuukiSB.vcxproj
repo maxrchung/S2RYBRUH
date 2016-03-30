@@ -76,22 +76,22 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Color.hpp" />
-    <ClInclude Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Easing.hpp" />
-    <ClInclude Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Layer.hpp" />
-    <ClInclude Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Origin.hpp" />
-    <ClInclude Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Sprite.hpp" />
-    <ClInclude Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Storyboard.hpp" />
-    <ClInclude Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Vector2.hpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="Origin.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Storyboard.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Color.cpp" />
-    <ClCompile Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Easing.cpp" />
-    <ClCompile Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Layer.cpp" />
-    <ClCompile Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Origin.cpp" />
-    <ClCompile Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Sprite.cpp" />
-    <ClCompile Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Storyboard.cpp" />
-    <ClCompile Include="..\..\..\MagicalGirlStoryBoard\MGSB\MGSB\Vector2.cpp" />
+    <ClInclude Include="Color.hpp" />
+    <ClInclude Include="Easing.hpp" />
+    <ClInclude Include="Layer.hpp" />
+    <ClInclude Include="Origin.hpp" />
+    <ClInclude Include="Sprite.hpp" />
+    <ClInclude Include="Storyboard.hpp" />
+    <ClInclude Include="Vector2.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
