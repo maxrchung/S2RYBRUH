@@ -20,6 +20,10 @@ void Sprite::Move(int startTime, int endTime, int startX, int startY, int endX, 
 	commands.push_back(command.str());
 }
 
+void Sprite::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing) {
+	Sprite::Move(startTime, endTime, startPos.x, startPos.y, endPos.x, endPos.y, easing);
+}
+
 // _F,<easing>,<starttime>,<endtime>,<start_opacity>,<end_opacity>
 void Sprite::Fade(int startTime, int endTime, float startOpacity, float endOpacity, Easing easing) {
 	if (endTime > this->endTime) {
@@ -66,6 +70,10 @@ void Sprite::Color(int startTime, int endTime, int startR, int startG, int start
 	std::ostringstream command;
 	command << "_C," << easing << "," << startTime << "," << endTime << "," << startR << "," << startG << "," << startB << "," << endR << "," << endG << "," << endB;
 	commands.push_back(command.str());
+}
+
+void Sprite::Color(int startTime, int endTime, ::Color startColor, ::Color endColor, Easing easing) {
+	Sprite::Color(startTime, endTime, startColor.r, startColor.g, startColor.b, endColor.r, endColor.g, endColor.b, easing);
 }
 
 void Sprite::Write(std::ofstream& outputFile) {
