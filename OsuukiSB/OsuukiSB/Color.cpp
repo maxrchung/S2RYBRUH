@@ -13,5 +13,4 @@ std::vector<Color> Colors {
 	Color(249, 254, 54),	// Yellow
 	Color(255, 63, 138),	// Pink
 	Color(0, 0, 0),			// Black
-
 };

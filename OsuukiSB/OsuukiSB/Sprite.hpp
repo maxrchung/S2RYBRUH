@@ -15,7 +15,7 @@ public:
 	// Conflicts with below function
 	Color color;
 
-	Sprite(const std::string& filePath, Vector2 position, Vector2 size, float scale = 1.0, Layer layer = Layer::Foreground, Origin origin = Origin::Centre);
+	Sprite(const std::string& filePath, Vector2 position, Layer layer = Layer::Foreground, Origin origin = Origin::Centre);
 	void Move(int startTime, int endTime, int startX, int startY, int endX, int endY, Easing easing = Easing::Linear);
 	void Fade(int startTime, int endTime, float startOpacity, float endOpacity, Easing easing = Easing::Linear);
 	void Rotate(int startTime, int endTime, float startRotate, float endRotate, Easing easing = Easing::Linear);
@@ -26,10 +26,10 @@ public:
 
 	float fade;
 	Vector2 position;
-	Vector2 size;
 	float rotation;
 	float scale;
-	float radius;
+	// Indicates when the sprite will no longer be on screen
+	int endTime;
 private:
 	Layer layer;
 	Origin origin;
