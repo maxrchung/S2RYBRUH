@@ -3,12 +3,12 @@
 #include <sstream>
 
 Sprite::Sprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin)
-	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), rotation(0.0), color(Color::Color(0, 0, 0)) {
+	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0), color(Color::Color(0, 0, 0)) {
 	Storyboard::Instance()->sprites.push_back(this);
 }
 
 // _M,<easing>,<starttime>,<endtime>,<start_x>,<start_y>,<end_x>,<end_y>
-void Sprite::Move(int startTime, int endTime, int startX, int startY, int endX, int endY, Easing easing) {
+void Sprite::Move(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing) {
 	if (endTime > this->endTime) {
 		this->endTime = endTime;
 	}
@@ -55,9 +55,29 @@ void Sprite::Scale(int startTime, int endTime, float startScale, float endScale,
 	}
 
 	scale = endScale;
+	scaleVector.x = endScale;
+	scaleVector.y = endScale;
 	std::ostringstream command;
 	command << "_S," << easing << "," << startTime << "," << endTime << "," << startScale << "," << endScale;
 	commands.push_back(command.str());
+}
+
+// _V,<easing>,<starttime>,<endtime>,<start_scale_x>,<start_scale_y>,<end_scale_x>,<end_scale_y>
+void Sprite::ScaleVector(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing) {
+	if (endTime > this->endTime) {
+		this->endTime = endTime;
+	}
+
+	scale = (endX + endY) / 2;
+	scaleVector.x = endX;
+	scaleVector.y = endY;
+	std::ostringstream command;
+	command << "_V," << easing << "," << startTime << "," << endTime << "," << startX << "," << startY << "," << endX << "," << endY;
+	commands.push_back(command.str());
+}
+
+void Sprite::ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2 endScale, Easing easing) {
+	Sprite::ScaleVector(startTime, endTime, startScale.x, startScale.y, endScale.x, endScale.y, easing);
 }
 
 // _C,<easing>,<starttime>,<endtime>,<start_r>,<start_g>,<start_b>,<end_r>,<end_g>,<end_b>
