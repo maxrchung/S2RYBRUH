@@ -16,6 +16,8 @@ public:
 	Sprite(const std::string& filePath, Vector2 position = Vector2(320.0f, 240.0f), Layer layer = Layer::Foreground, Origin origin = Origin::Centre);
 	void Move(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing = Easing::Linear);
 	void Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear);
+	void MoveX(int startTime, int endTime, float startX, float endX, Easing easing);
+	void MoveY(int startTime, int endTime, float startY, float endY, Easing easing);
 	void Fade(int startTime, int endTime, float startOpacity, float endOpacity, Easing easing = Easing::Linear);
 	void Rotate(int startTime, int endTime, float startRotate, float endRotate, Easing easing = Easing::Linear);
 	void Scale(int startTime, int endTime, float startScale, float endScale, Easing easing = Easing::Linear);
