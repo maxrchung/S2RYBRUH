@@ -18,8 +18,15 @@ void Storyboard::Write(const std::string& destinationPath) {
 	outputFile.open(destinationPath);
 
 	outputFile << "[Events]" << std::endl;
-	for (auto sprite : sprites) {
-		sprite->Write(outputFile);
+	outputFile << "//Background and Video events" << std::endl;
+
+	for (int layer = Background; layer < LayerCount; layer++) {
+		outputFile << "//Storyboard Layer " << layer << " (" << Layers[layer] << ")" << std::endl;
+		for (auto sprite : sprites) {
+			if (sprite->layer == layer) {
+				sprite->Write(outputFile);
+			}
+		}
 	}
 
 	outputFile << "//Storyboard Sound Samples" << std::endl;
