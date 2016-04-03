@@ -24,6 +24,30 @@ void Sprite::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, 
 	Sprite::Move(startTime, endTime, startPos.x, startPos.y, endPos.x, endPos.y, easing);
 }
 
+// _MX,<easing>,<starttime>,<endtime>,<start_x>,<end_x>
+void Sprite::MoveX(int startTime, int endTime, float startX, float endX, Easing easing) {
+	if (endTime > this->endTime) {
+		this->endTime = endTime;
+	}
+
+	position.x = endX;
+	std::ostringstream command;
+	command << "_MX," << easing << "," << startTime << "," << endTime << "," << startX << "," << endX;
+	commands.push_back(command.str());
+}
+
+// _MY,<easing>,<starttime>,<endtime>,<start_y>,<end_y>
+void Sprite::MoveY(int startTime, int endTime, float startY, float endY, Easing easing) {
+	if (endTime > this->endTime) {
+		this->endTime = endTime;
+	}
+
+	position.y = endY;
+	std::ostringstream command;
+	command << "_MY," << easing << "," << startTime << "," << endTime << "," << startY << "," << endY;
+	commands.push_back(command.str());
+}
+
 // _F,<easing>,<starttime>,<endtime>,<start_opacity>,<end_opacity>
 void Sprite::Fade(int startTime, int endTime, float startOpacity, float endOpacity, Easing easing) {
 	if (endTime > this->endTime) {
