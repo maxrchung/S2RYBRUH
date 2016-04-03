@@ -12,7 +12,7 @@ Storyboard* Storyboard::Instance() {
 	return instance;
 }
 
-void Storyboard::Write(const std::string& destinationPath="") {
+void Storyboard::Write(const std::string& destinationPath) {
 	std::cout << destinationPath << std::endl;
 	std::ofstream outputFile;
 	outputFile.open(destinationPath);
