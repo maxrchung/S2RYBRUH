@@ -4,7 +4,7 @@
 
 Sprite::Sprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin)
 	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0), color(Color::Color(0, 0, 0)) {
-	Storyboard::Instance()->sprites.push_back(this);
+	Storyboard::Instance()->sprites[layer].push_back(this);
 }
 
 // _M,<easing>,<starttime>,<endtime>,<start_x>,<start_y>,<end_x>,<end_y>
@@ -79,8 +79,6 @@ void Sprite::Scale(int startTime, int endTime, float startScale, float endScale,
 	}
 
 	scale = endScale;
-	scaleVector.x = endScale;
-	scaleVector.y = endScale;
 	std::ostringstream command;
 	command << "_S," << easing << "," << startTime << "," << endTime << "," << startScale << "," << endScale;
 	commands.push_back(command.str());
@@ -92,7 +90,6 @@ void Sprite::ScaleVector(int startTime, int endTime, float startX, float startY,
 		this->endTime = endTime;
 	}
 
-	scale = (endX + endY) / 2;
 	scaleVector.x = endX;
 	scaleVector.y = endY;
 	std::ostringstream command;

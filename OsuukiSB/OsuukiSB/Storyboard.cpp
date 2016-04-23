@@ -8,6 +8,9 @@ Storyboard* Storyboard::instance = NULL;
 Storyboard* Storyboard::Instance() {
 	if (!instance) {
 		instance = new Storyboard;
+		for (int i = 0; i < Layer::LayerCount; ++i) {
+			instance->sprites.push_back(std::vector<Sprite*>());
+		}
 	}
 	return instance;
 }
@@ -20,12 +23,10 @@ void Storyboard::Write(const std::string& destinationPath) {
 	outputFile << "[Events]" << std::endl;
 	outputFile << "//Background and Video events" << std::endl;
 
-	for (int layer = Background; layer < LayerCount; layer++) {
-		outputFile << "//Storyboard Layer " << layer << " (" << Layers[layer] << ")" << std::endl;
-		for (auto sprite : sprites) {
-			if (sprite->layer == layer) {
-				sprite->Write(outputFile);
-			}
+	for (int i = 0; i < Layer::LayerCount; ++i) {
+		outputFile << "//Storyboard Layer " << i << " (" << Layers[i] << ")" << std::endl;
+		for (auto sprite : sprites[i]) {
+			sprite->Write(outputFile);
 		}
 	}
 
