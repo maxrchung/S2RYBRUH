@@ -2,7 +2,12 @@
 #include "math.h"
 
 Vector2::Vector2(float x, float y)
-	: x(x), y(y) {}
+	: x(x), y(y) {
+}
+
+Vector2::Vector2(Vector3 v)
+	: x(v.x), y(v.y) {
+}
 
 float Vector2::Magnitude() {
 	return sqrt(x * x + y * y);
@@ -35,7 +40,7 @@ Vector2 Vector2::Project(Vector2 axis) {
 	return projection;
 }
 
-void Vector2::RotateAround(Vector2 origin, float rotation) {
+Vector2 Vector2::RotateAround(Vector2 origin, float rotation) {
 	Vector2 fromMid = *this - origin;
 	Vector2 unitVec(1, 0);
 	float angleFrom0 = fromMid.AngleBetween(unitVec);
@@ -47,7 +52,7 @@ void Vector2::RotateAround(Vector2 origin, float rotation) {
 	endMove *= fromMid.Magnitude();
 	endMove = origin + endMove;
 
-	*this = endMove;
+	return endMove;
 }
 
 Vector2 Vector2::operator-() {
