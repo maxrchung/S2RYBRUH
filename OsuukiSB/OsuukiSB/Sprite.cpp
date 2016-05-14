@@ -3,7 +3,7 @@
 #include <sstream>
 
 Sprite::Sprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin)
-	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0), color(Color::Color(0, 0, 0)) {
+	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0f), color(Color::Color(0, 0, 0)) {
 	Storyboard::Instance()->sprites[layer].push_back(this);
 }
 

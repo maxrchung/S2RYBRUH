@@ -6,7 +6,7 @@
 class Vector2 {
 public:
 	Vector2(float x, float y);
-	Vector2(Vector3);
+	Vector2(Vector3 v);
 	float Magnitude();
 	Vector2 Normalize();
 	float Dot(Vector2 v);
@@ -26,6 +26,7 @@ public:
 	void operator*=(float multiple);
 	void operator*=(Vector2 v);
 	void operator/=(float division);
+	bool operator==(Vector2 v);
 
 	float x;
 	float y;

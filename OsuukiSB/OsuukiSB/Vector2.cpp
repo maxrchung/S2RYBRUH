@@ -1,5 +1,6 @@
 #include "Vector2.hpp"
 #include "math.h"
+#include <iostream>
 
 Vector2::Vector2(float x, float y)
 	: x(x), y(y) {
@@ -24,11 +25,21 @@ float Vector2::Dot(Vector2 v) {
 
 float Vector2::AngleBetween(Vector2 v) {
 	if (this->Magnitude() == 0 || v.Magnitude() == 0) {
+		throw "Magnitude of a vector is 0";
+	}
+	else if (this->Normalize() == v.Normalize()) {
 		return 0;
 	}
 	else {
 		float dotProd = this->Dot(v);
 		dotProd /= this->Magnitude() * v.Magnitude();
+
+		if (dotProd > 1.0f) {
+			dotProd = 1.0f;
+		}
+		else if (dotProd < -1.0f) {
+			dotProd = -1.0f;
+		}
 		return acos(dotProd);
 	}
 }
@@ -102,4 +113,8 @@ void Vector2::operator*=(Vector2 v) {
 void Vector2::operator/=(float division) {
 	x /= division;
 	y /= division;
+}
+
+bool Vector2::operator==(Vector2 v) {
+	return x == v.x && y == v.y;
 }
