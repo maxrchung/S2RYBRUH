@@ -118,3 +118,7 @@ void Vector2::operator/=(float division) {
 bool Vector2::operator==(Vector2 v) {
 	return x == v.x && y == v.y;
 }
+
+bool Vector2:: operator!=(Vector2 v) {
+	return !(*this == v);
+}

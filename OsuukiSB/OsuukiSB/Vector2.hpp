@@ -27,6 +27,7 @@ public:
 	void operator*=(Vector2 v);
 	void operator/=(float division);
 	bool operator==(Vector2 v);
+	bool operator!=(Vector2 v);
 
 	float x;
 	float y;
