@@ -7,7 +7,7 @@ class Time {
 public:
 	Time(int value);
 	Time(std::string format);
-	int milliseconds;
+	int ms;
 	std::string format;
 };
 

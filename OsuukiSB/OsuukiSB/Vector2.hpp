@@ -5,6 +5,8 @@
 
 class Vector2 {
 public:
+	static Vector2 Midpoint;
+	Vector2();
 	Vector2(float x, float y);
 	Vector2(Vector3 v);
 	float Magnitude();

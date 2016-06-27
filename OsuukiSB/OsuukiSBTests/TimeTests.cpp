@@ -40,22 +40,22 @@ namespace OsuukiSBTests {
 			Assert::AreEqual(time.format, format);
 		}
 
-		TEST_METHOD(NewTimeMillisecondsEqualsMillisecondsBasic) {
+		TEST_METHOD(NewTimemsEqualsmsBasic) {
 			Time time = Time("12:34:567");
-			int milliseconds = 754567;
-			Assert::AreEqual(milliseconds, time.milliseconds);
+			int ms = 754567;
+			Assert::AreEqual(ms, time.ms);
 		}
 
-		TEST_METHOD(NewTimeMillisecondsEqualsMillisecondsMax) {
+		TEST_METHOD(NewTimemsEqualsmsMax) {
 			Time time = Time("99:59:999");
-			int milliseconds = 5999999;
-			Assert::AreEqual(milliseconds, time.milliseconds);
+			int ms = 5999999;
+			Assert::AreEqual(ms, time.ms);
 		}
 
-		TEST_METHOD(NewTimeMillisecondsEqualsMillisecondsMin) {
+		TEST_METHOD(NewTimemsEqualsmsMin) {
 			Time time = Time("00:00:000");
-			int milliseconds = 0;
-			Assert::AreEqual(milliseconds, time.milliseconds);
+			int ms = 0;
+			Assert::AreEqual(ms, time.ms);
 		}
 
 		TEST_METHOD(NewTimeParamsEqualParamsFormat) {
@@ -64,10 +64,10 @@ namespace OsuukiSBTests {
 			Assert::AreEqual(format, time.format);
 		}
 
-		TEST_METHOD(NewTimeParamsEqualParamsMilliseconds) {
-			int milliseconds = 69420;
+		TEST_METHOD(NewTimeParamsEqualParamsms) {
+			int ms = 69420;
 			Time time = Time(69420);
-			Assert::AreEqual(milliseconds, time.milliseconds);
+			Assert::AreEqual(ms, time.ms);
 		}
 	};
 }

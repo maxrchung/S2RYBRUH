@@ -2,6 +2,12 @@
 #include "math.h"
 #include <iostream>
 
+Vector2 Vector2::Midpoint(320.0f, 240.0f);
+
+Vector2::Vector2() 
+	: x(0), y(0) {
+}
+
 Vector2::Vector2(float x, float y)
 	: x(x), y(y) {
 }

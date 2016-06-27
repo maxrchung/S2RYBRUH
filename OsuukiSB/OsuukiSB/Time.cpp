@@ -1,10 +1,10 @@
 #include "Time.hpp"
 #include <regex>
 
-Time::Time(int milliseconds) {
-	this->milliseconds = milliseconds;
-	int minutes = milliseconds / 60000;
-	int minusMinutes = milliseconds - minutes * 60000;
+Time::Time(int ms) {
+	this->ms = ms;
+	int minutes = ms / 60000;
+	int minusMinutes = ms - minutes * 60000;
 	int seconds = minusMinutes / 1000;
 	int minusSeconds = minusMinutes - seconds * 1000;
 	char buffer[50];
@@ -25,6 +25,6 @@ Time::Time(std::string format) {
 
 	format = smatch.suffix().str();
 	std::regex_search(format, smatch, regex);
-	int milliseconds = std::stoi(smatch[0]);
-	this->milliseconds = minutes * 60000 + seconds * 1000 + milliseconds;
+	int ms = std::stoi(smatch[0]);
+	this->ms = minutes * 60000 + seconds * 1000 + ms;
 }
