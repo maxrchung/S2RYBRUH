@@ -76,28 +76,37 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Easing.cpp" />
-    <ClCompile Include="Layer.cpp" />
-    <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="Origin.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Storyboard.cpp" />
-    <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Vector2.cpp" />
-    <ClCompile Include="Vector3.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Easing.hpp" />
+    <ClInclude Include="kiss_fft.h" />
+    <ClInclude Include="kiss_fftr.h" />
     <ClInclude Include="Layer.hpp" />
     <ClInclude Include="Matrix.hpp" />
+    <ClInclude Include="MusicAnalysis.hpp" />
+    <ClInclude Include="MusicAnalysisConfig.hpp" />
+    <ClInclude Include="MusicAnalysisData.hpp" />
     <ClInclude Include="Origin.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Storyboard.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Vector2.hpp" />
     <ClInclude Include="Vector3.hpp" />
+    <ClInclude Include="Wav.hpp" />
+    <ClInclude Include="_kiss_fft_guts.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="MusicAnalysis.cpp" />
+    <ClCompile Include="Origin.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Storyboard.cpp" />
+    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="Wav.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
