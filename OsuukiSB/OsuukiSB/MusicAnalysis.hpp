@@ -25,14 +25,14 @@
 class MusicAnalysis {
 public:
 	MusicAnalysis(MusicAnalysisConfig config);
-	MusicAnalysisData LoadSnapshots(const std::string& dataPath);
+	static MusicAnalysisData LoadData(const std::string& dataPath);
 private:
 	Wav LoadWavFile(const char* fname);
 	float CalculateFreqPower(int freqBandStart, int freqBandEnd, int divisions);
 	std::vector<int> CalculateFrequencyBands(int freqBandStart, int freqBandEnd, int divisions, const Wav& song);
 	float Hann(short in, int index, int size);
 	MusicAnalysisData TakeSnapshots(int snapshotRate, const std::vector<int>& freqBandIndices, const Wav& song);
-	void SaveSnapshots(const MusicAnalysisData& data, const std::string& destinationPath);
+	void SaveData(MusicAnalysisData& data, const std::string& destinationPath);
 };
 
 #endif//MUSICANALYSIS_HPP

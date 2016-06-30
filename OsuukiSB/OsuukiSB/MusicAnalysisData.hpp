@@ -16,6 +16,10 @@ typedef std::vector<std::vector<float>> ScaleData;
 struct MusicAnalysisData {
 	int snapshotRate;
 	ScaleData scaleData;
+	int bandCount;
+	// Number of measurements
+	int scaleCount;
+	int songLength;
 };
 
 #endif//MUSICANALYSISDATA_HPP

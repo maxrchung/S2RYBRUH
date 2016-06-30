@@ -107,5 +107,11 @@
     <ClCompile Include="MusicAnalysis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="kiss_fft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="kiss_fftr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

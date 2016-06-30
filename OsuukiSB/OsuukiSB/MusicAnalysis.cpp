@@ -13,7 +13,7 @@ MusicAnalysis::MusicAnalysis(MusicAnalysisConfig config) {
 	// Take spectrum snapshots and store in data
 	MusicAnalysisData data = TakeSnapshots(config.snapshotRate, freqBandIndices, song);
 
-	SaveSnapshots(data, config.dataPath);
+	SaveData(data, config.dataPath);
 }
 
 // Grabs info from a WAV file and puts it into a class
@@ -76,6 +76,15 @@ float MusicAnalysis::CalculateFreqPower(int freqBandStart, int freqBandEnd, int 
 
 std::vector<int> MusicAnalysis::CalculateFrequencyBands(int freqBandStart, int freqBandEnd, int divisions, const Wav& song) {
 	float freqPower = CalculateFreqPower(freqBandStart, freqBandEnd, divisions);
+	// Size is division + 1 mostly because of later steps. The freqBandIndices 
+	// represent ranges that a frequency falls under. For example, for the first bar,
+	// freqBandIndices[0] represents the start FFT bin index to look through and
+	// freqBandIndices[1] represents the end FFT bin index to look through. The reason
+	// the size is divisions + 1 is because the last bar needs an extra index for its
+	// end bin.
+	// One alternative that I might end up doing is making some kind of Range class to
+	// make this kind of exception less of a hassle to remember, but I understand it as of now,
+	// so I'll defer changes down the line
 	std::vector<int> freqBandIndices(divisions + 1);
 
 	// Find the corresponding indices reflecting the freqs after FFT.
@@ -87,7 +96,7 @@ std::vector<int> MusicAnalysis::CalculateFrequencyBands(int freqBandStart, int f
 	float freqConstant = (float)song.sampleRate / WINSIZE;
 	{
 		float freq = freqBandStart;
-		for (int i = 0; i < divisions + 1; ++i) {
+		for (int i = 0; i < freqBandIndices.size(); ++i) {
 			int freqBandIndex = freq / freqConstant;
 			freqBandIndices[i] = freqBandIndex;
 			freq *= freqPower;
@@ -113,7 +122,7 @@ float MusicAnalysis::Hann(short in, int index, int size) {
 MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vector<int>& freqBandIndices, const Wav& song) {
 	MusicAnalysisData data;
 	data.snapshotRate = snapshotRate;
-	data.scaleData = ScaleData(freqBandIndices.size());
+	data.scaleData = ScaleData(freqBandIndices.size() - 1);
 
 	// We do snapshotRate * 2 because we are using 1 channel WAV file
 	float snapshotsPerSec = 1000.0f / (snapshotRate * 2);
@@ -123,6 +132,10 @@ MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vect
 	// progress through to match the snapshot rate
 	// Note also that sample rate is given in Hz, samples per second
 	float progressRate = song.sampleRate / snapshotsPerSec;
+
+	std::cout << snapshotsPerSec << std::endl;
+	std::cout << progressRate << std::endl;
+	std::cout << song << std::endl;
 
 	// Find start and end points we take samples from
 	// Need to account for window sizes, so we start and end with a bit of buffer space
@@ -181,20 +194,23 @@ MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vect
 	return data;
 }
 
-void MusicAnalysis::SaveSnapshots(const MusicAnalysisData& data, const std::string& destinationPath) {
+void MusicAnalysis::SaveData(MusicAnalysisData& data, const std::string& destinationPath) {
 	std::ofstream output(destinationPath);
 	output << data.snapshotRate << std::endl;
 	
 	// For easier time loading back in, prints number of bars
-	int bandCount = data.scaleData.size();
-	output << bandCount << std::endl;
+	data.bandCount = data.scaleData.size();
+	output << data.bandCount << std::endl;
 
 	// And prints number of values per bar
-	int sampleCount = data.scaleData[0].size();
-	output << sampleCount << std::endl;
+	data.scaleCount = data.scaleData[0].size();
+	output << data.scaleCount << std::endl;
 
-	for (int i = 0; i < bandCount; ++i) {
-		for (int j = 0; j < sampleCount; ++j) {
+	data.songLength = data.scaleCount * data.snapshotRate;
+	output << data.songLength << std::endl;
+
+	for (int i = 0; i < data.bandCount; ++i) {
+		for (int j = 0; j < data.scaleCount; ++j) {
 			output << data.scaleData[i][j] << std::endl;
 		}
 	}
@@ -202,7 +218,7 @@ void MusicAnalysis::SaveSnapshots(const MusicAnalysisData& data, const std::stri
 	output.close();
 }
 
-MusicAnalysisData MusicAnalysis::LoadSnapshots(const std::string& dataPath) {
+MusicAnalysisData MusicAnalysis::LoadData(const std::string& dataPath) {
 	std::ifstream input(dataPath);
 
 	int snapshotRate;
@@ -213,6 +229,9 @@ MusicAnalysisData MusicAnalysis::LoadSnapshots(const std::string& dataPath) {
 
 	int sampleCount;
 	input >> sampleCount;
+
+	int songLength;
+	input >> songLength;
 
 	ScaleData scaleData;
 	for (int i = 0; i < bandCount; ++i) {
@@ -230,6 +249,9 @@ MusicAnalysisData MusicAnalysis::LoadSnapshots(const std::string& dataPath) {
 	MusicAnalysisData data;
 	data.snapshotRate = snapshotRate;
 	data.scaleData = scaleData;
+	data.bandCount = bandCount;
+	data.scaleCount = sampleCount;
+	data.songLength = songLength;
 
 	return data;
 }

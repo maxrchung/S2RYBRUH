@@ -97,6 +97,8 @@
   <ItemGroup>
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="kiss_fft.c" />
+    <ClCompile Include="kiss_fftr.c" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MusicAnalysis.cpp" />
