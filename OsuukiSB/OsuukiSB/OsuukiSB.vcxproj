@@ -102,6 +102,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MusicAnalysis.cpp" />
+    <ClCompile Include="MusicAnalysisData.cpp" />
     <ClCompile Include="Origin.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Storyboard.cpp" />

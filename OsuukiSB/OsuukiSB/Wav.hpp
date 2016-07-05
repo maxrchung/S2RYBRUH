@@ -24,7 +24,4 @@ struct Wav {
 	friend std::ostream& operator<<(std::ostream& ostream, const Wav& wav);
 };
 
-
-
-
 #endif//WAV_HPP

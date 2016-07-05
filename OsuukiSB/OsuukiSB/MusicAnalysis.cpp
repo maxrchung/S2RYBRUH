@@ -6,7 +6,7 @@ MusicAnalysis::MusicAnalysis(MusicAnalysisConfig config) {
 
 	// Actual indices corresponding to the WINSIZE
 	std::vector<int> freqBandIndices = CalculateFrequencyBands(config.freqBandStart, 
-		config.freqBandStart, 
+		config.freqBandEnd, 
 		config.divisions, 
 		song);
 
@@ -94,13 +94,11 @@ std::vector<int> MusicAnalysis::CalculateFrequencyBands(int freqBandStart, int f
 	// determine the end range of bins you should search in.
 	// The nth FFT bin is in n * sampleRate / WINSIZE frequency
 	float freqConstant = (float)song.sampleRate / WINSIZE;
-	{
-		float freq = freqBandStart;
-		for (int i = 0; i < freqBandIndices.size(); ++i) {
-			int freqBandIndex = freq / freqConstant;
-			freqBandIndices[i] = freqBandIndex;
-			freq *= freqPower;
-		}
+	float freq = freqBandStart;
+	for (int i = 0; i < freqBandIndices.size(); ++i) {
+		int freqBandIndex = freq / freqConstant;
+		freqBandIndices[i] = freqBandIndex;
+		freq *= freqPower;
 	}
 	return freqBandIndices;
 }
@@ -124,8 +122,10 @@ MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vect
 	data.snapshotRate = snapshotRate;
 	data.scaleData = ScaleData(freqBandIndices.size() - 1);
 
-	// We do snapshotRate * 2 because we are using 1 channel WAV file
-	float snapshotsPerSec = 1000.0f / (snapshotRate * 2);
+	// We do snapshotRate, this assumes mono channel. I ran into some
+	// problems with trying to do dual channel because I think the empty
+	// sections screw over some parts of the FFT. 
+	float snapshotsPerSec = 1000.0f / snapshotRate;
 	// A little on the distinction between snapshots and progress:
 	// Snapshot rate describes how often we're taking snapshots, and
 	// progress rate describes how many respective samples we need to
@@ -133,10 +133,11 @@ MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vect
 	// Note also that sample rate is given in Hz, samples per second
 	float progressRate = song.sampleRate / snapshotsPerSec;
 
-	std::cout << snapshotsPerSec << std::endl;
-	std::cout << progressRate << std::endl;
-	std::cout << song << std::endl;
-
+	// Debug info
+	//std::cout << snapshotsPerSec << std::endl;
+	//std::cout << progressRate << std::endl;
+	//std::cout << song << std::endl;
+	
 	// Find start and end points we take samples from
 	// Need to account for window sizes, so we start and end with a bit of buffer space
 	for (float p = progressRate; p < song.size - progressRate; p += progressRate) {
@@ -179,7 +180,7 @@ MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vect
 					maxMagSquared = magSquared;
 				}
 			}
-
+			
 			// Scale the magnitude to a more reasonable log/dB scale
 			float loggedMax = 10.0f * log10f(maxMagSquared);
 			// log10 can return from negative infinity to 0, so this clamps negative values

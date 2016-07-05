@@ -1,6 +1,7 @@
 #ifndef MUSICANALYSISDATA_HPP
 #define MUSICANALYSISDATA_HPP
 
+#include "Time.hpp"
 #include <vector>
 
 // This class is used to output music analyzed info in and out of files
@@ -13,13 +14,17 @@
 
 typedef std::vector<std::vector<float>> ScaleData;
 
-struct MusicAnalysisData {
+class MusicAnalysisData {
+public:
 	int snapshotRate;
 	ScaleData scaleData;
 	int bandCount;
 	// Number of measurements
 	int scaleCount;
 	int songLength;
+
+	// Finds the closest measuring to the specified time
+	int GetMeasureIndex(Time time);
 };
 
 #endif//MUSICANALYSISDATA_HPP
