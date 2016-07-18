@@ -12,6 +12,10 @@ bool Color::operator==(Color c) {
 	return r == c.r && g == c.g && b == c.b;
 }
 
+bool Color::operator!=(Color c) {
+	return !(*this == c);
+}
+
 Color Color::operator*(float f) {
 	return Color(r * f, g * f, b * f);
 }
