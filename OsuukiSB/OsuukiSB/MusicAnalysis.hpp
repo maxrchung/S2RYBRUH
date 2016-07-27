@@ -1,11 +1,5 @@
 #ifndef MUSICANALYSIS_HPP
 #define MUSICANALYSIS_HPP
-
-// To get by errors for C-style file I/O
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #define _USE_MATH_DEFINES
 
 // Have to do this because I can't seem to be able to set an array's length 

@@ -149,7 +149,7 @@ MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vect
 		for (int j = 0; j < WINSIZE; ++j) {
 			// Taking data half below and after makes sure that our window
 			// is centered on where we want to take our snapshot
-			float data = song.data[j + (int)p - (WINSIZE / 2)];
+			short data = song.data[j + (int)p - (WINSIZE / 2)];
 			float hann = Hann(data, j, WINSIZE);
 			// Make sure to divide!! FFT takes input from -1 to 1 but WAV
 			// gives short values between -32000~ to 32000~

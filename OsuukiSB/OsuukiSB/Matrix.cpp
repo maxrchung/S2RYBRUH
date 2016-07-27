@@ -11,6 +11,14 @@ Matrix::Matrix(Vector3 v)
 	table[2][0] = v.z;
 }
 
+Matrix::Matrix(Vector4 v)
+	: rows(4), columns(1), table(Table(3, std::vector<float>(1, 0))) {
+	table[0][0] = v.x;
+	table[1][0] = v.y;
+	table[2][0] = v.z;
+	table[3][0] = v.w;
+}
+
 Matrix Matrix::operator*(const Matrix& rhs) {
 	if (columns != rhs.rows) {
 		throw "Cannot multiply matrices; incompatible sizes";
@@ -28,4 +36,8 @@ Matrix Matrix::operator*(const Matrix& rhs) {
 	}
 
 	return mult;
+}
+
+std::vector<float> Matrix::operator[](int row) {
+	return table[row];
 }

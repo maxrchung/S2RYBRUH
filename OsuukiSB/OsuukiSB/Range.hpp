@@ -5,6 +5,8 @@
 // Honestly seems kind of pointless since I might as well just make a Vector2i class
 // or something. Whatever, I'm using this for a very small thing in Dualive's
 // Moire background. I'll re-evaluate this class in the future.
+
+// lol i never actually used it in the Moire
 class Range {
 public:
 	Range(int start, int end);

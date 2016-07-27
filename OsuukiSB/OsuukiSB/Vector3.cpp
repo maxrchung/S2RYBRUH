@@ -1,6 +1,9 @@
-#include "Vector3.hpp"
-#include "Vector2.hpp"
 #include "Matrix.hpp"
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Vector4.hpp"
+
+Vector3 Vector3::Zero = Vector3(0, 0, 0);
 
 Vector3::Vector3(float x, float y, float z)
 	: x(x), y(y), z(z) {	
@@ -12,7 +15,7 @@ Vector3::Vector3(Vector2 v)
 }
 
 Vector3::Vector3(Matrix m)
-	: x(m.table[0][0]), y(m.table[1][0]), z(m.table[2][0]) {
+	: x(m[0][0]), y(m[1][0]), z(m[2][0]) {
 	if (m.columns != 1 || m.rows != 3) {
 		throw "Cannot turn Matrix into a Vector3; Matrix is not a Vector3";
 	}
@@ -60,10 +63,10 @@ Vector3 Vector3::Rotate(float xRad, float yRad, float zRad) {
 	rot.table = {
 		{ cosx*cosy, cosx*siny*sinz - sinx*cosz, cosx*siny*cosz + sinx*sinz },
 		{ sinx*cosy, sinx*siny*sinz + cosx*cosz, sinx*siny*cosz - cosx*sinz },
-		{ -siny, cosy*sinz, cosy*cosz },
+		{ -siny,     cosy*sinz,                  cosy*cosz                  },
 	};
 
-	return Vector3(rot * (*this));
+	return Vector3(rot * Matrix(*this));
 }
 
 Vector3 Vector3::RotateX(float xRad) {
@@ -86,12 +89,28 @@ Vector3 Vector3::RotateAround(Vector3 v, float rotAmount) {
 	// http://metalbyexample.com/linear-algebra/
 	Matrix rot(3, 3);
 	rot.table = {
-		{ cos(r) + v.x*v.x*(1-cos(r)), v.x*v.y*(1-cos(r)) - v.z*sin(r), v.x*v.z*(1-cos(r)) + v.y*sin(r) },
-		{ v.y*v.x*(1-cos(r)) + v.z*sin(r), cos(r) + v.y*v.y*(1 - cos(r)), v.y*v.z*(1-cos(r)) - v.x*sin(r) },
-		{ v.z*v.x*(1-cos(r)) - v.y*sin(r), v.z*v.y*(1-cos(r)) + v.x*sin(r), cos(r) + v.z*v.z*(1-cos(r)) },
+		{ cos(r) + v.x*v.x*(1-cos(r)),     v.x*v.y*(1-cos(r)) - v.z*sin(r), v.x*v.z*(1-cos(r)) + v.y*sin(r) },
+		{ v.y*v.x*(1-cos(r)) + v.z*sin(r), cos(r) + v.y*v.y*(1 - cos(r)),   v.y*v.z*(1-cos(r)) - v.x*sin(r) },
+		{ v.z*v.x*(1-cos(r)) - v.y*sin(r), v.z*v.y*(1-cos(r)) + v.x*sin(r), cos(r) + v.z*v.z*(1-cos(r))     },
 	};
 
-	return Vector3(rot * (*this));
+	return Vector3(rot * Matrix(*this));
+}
+
+Vector2 Vector3::Perspect(float cameraZ, float distance) {
+	Matrix perspective(4, 4);
+	perspective.table = {
+		{ 1, 0, 0,			0 },
+		{ 0, 1, 0,			0 },
+		{ 0, 0, 1,			0 },
+		{ 0, 0, 1/distance, 0 }
+	};
+	// Adjust for camera position
+	Vector4 perspectee(this->x, this->y, this->z - cameraZ, 1);
+	Vector4 perspected = Vector4(perspective * Matrix(perspectee));
+	Vector2 perspectedDivided(perspected.x / perspected.w, perspected.y / perspected.w);
+
+	return Vector2::Midpoint + perspectedDivided;
 }
 
 Vector3 Vector3::operator-() {

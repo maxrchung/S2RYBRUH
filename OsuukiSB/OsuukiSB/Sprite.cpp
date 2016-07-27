@@ -102,7 +102,7 @@ void Sprite::ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2
 }
 
 // _C,<easing>,<starttime>,<endtime>,<start_r>,<start_g>,<start_b>,<end_r>,<end_g>,<end_b>
-void Sprite::Color(int startTime, int endTime, int startR, int startG, int startB, int endR, int endG, int endB, Easing easing) {
+void Sprite::Color(int startTime, int endTime, float startR, float startG, float startB, float endR, float endG, float endB, Easing easing) {
 	if (endTime > this->endTime) {
 		this->endTime = endTime;
 	}
