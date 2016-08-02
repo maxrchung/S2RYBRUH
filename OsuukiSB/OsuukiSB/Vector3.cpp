@@ -6,7 +6,7 @@
 Vector3 Vector3::Zero = Vector3(0, 0, 0);
 
 Vector3::Vector3(float x, float y, float z)
-	: x(x), y(y), z(z) {	
+	: x(x), y(y), z(z) {
 }
 
 Vector3::Vector3(Vector2 v)
@@ -52,15 +52,14 @@ Vector3 Vector3::Normalize() {
 }
 
 Vector3 Vector3::Rotate(float xRad, float yRad, float zRad) {
-	float cosx = cos(xRad);
-	float cosy = cos(yRad);
-	float cosz = cos(zRad);
-	float sinx = sin(xRad);
-	float siny = sin(yRad);
-	float sinz = sin(zRad);
-	Matrix rot(3, 3);
 	// http://planning.cs.uiuc.edu/node102.html
-	rot.table = {
+	float cosx = cos(zRad);
+	float cosy = cos(yRad);
+	float cosz = cos(xRad);
+	float sinx = sin(zRad);
+	float siny = sin(yRad);
+	float sinz = sin(xRad);
+	Matrix rot = {
 		{ cosx*cosy, cosx*siny*sinz - sinx*cosz, cosx*siny*cosz + sinx*sinz },
 		{ sinx*cosy, sinx*siny*sinz + cosx*cosz, sinx*siny*cosz - cosx*sinz },
 		{ -siny,     cosy*sinz,                  cosy*cosz                  },

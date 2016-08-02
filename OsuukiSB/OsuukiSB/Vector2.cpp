@@ -37,16 +37,16 @@ float Vector2::AngleBetween(Vector2 v) {
 		return 0;
 	}
 	else {
-		float dotProd = this->Dot(v);
-		dotProd /= this->Magnitude() * v.Magnitude();
+		float dot = this->Dot(v);
+		float dotOverMag = dot / (this->Magnitude() * v.Magnitude());
 
-		if (dotProd > 1.0f) {
-			dotProd = 1.0f;
+		if (dotOverMag > 1.0f) {
+			dotOverMag = 1.0f;
 		}
-		else if (dotProd < -1.0f) {
-			dotProd = -1.0f;
+		else if (dotOverMag < -1.0f) {
+			dotOverMag = -1.0f;
 		}
-		return acos(dotProd);
+		return acos(dotOverMag);
 	}
 }
 

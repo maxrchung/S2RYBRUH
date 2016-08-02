@@ -1,7 +1,7 @@
 #include "Vector4.hpp"
 
 Vector4::Vector4(Matrix m)
-	: x(m[0][0]), y(m[0][1]), z(m[0][2]), w(m[0][3]) {
+	: x(m[0][0]), y(m[1][0]), z(m[2][0]), w(m[3][0]) {
 
 }
 

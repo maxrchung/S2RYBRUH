@@ -1,22 +1,29 @@
 #include "Matrix.hpp"
 
+Matrix::Matrix(int rows)
+	: rows(rows), columns(rows), table(Table(rows, std::vector<float>(rows, 0))) {
+
+}
+
 Matrix::Matrix(int rows, int columns)
 	: rows(rows), columns(columns), table(Table(rows, std::vector<float>(columns, 0))) {
 }
 
+Matrix::Matrix(Vector2 v)
+	: rows(2), columns(1), table({ { v.x }, { v.y } }) {
+}
+
 Matrix::Matrix(Vector3 v)
-	: rows(3), columns(1), table(Table(3, std::vector<float>(1, 0))) {
-	table[0][0] = v.x;
-	table[1][0] = v.y;
-	table[2][0] = v.z;
+	: rows(3), columns(1), table({ { v.x }, { v.y }, { v.z } }) {
 }
 
 Matrix::Matrix(Vector4 v)
-	: rows(4), columns(1), table(Table(3, std::vector<float>(1, 0))) {
-	table[0][0] = v.x;
-	table[1][0] = v.y;
-	table[2][0] = v.z;
-	table[3][0] = v.w;
+	: rows(4), columns(1), table({ { v.x }, { v.y }, { v.z }, { v.w } }) {
+}
+
+Matrix::Matrix(TableInitializerList tableInit)
+	: rows(tableInit.size()), columns(tableInit.begin()->size()) {
+	table.insert(table.end(), tableInit.begin(), tableInit.end());
 }
 
 Matrix Matrix::operator*(const Matrix& rhs) {
@@ -31,13 +38,39 @@ Matrix Matrix::operator*(const Matrix& rhs) {
 			for (int k = 0; k < columns; ++k) {
 				value += table[i][k] * rhs.table[k][j];
 			}
-			mult.table[i][j] = value;
+			mult[i][j] = value;
 		}
 	}
 
 	return mult;
 }
 
-std::vector<float> Matrix::operator[](int row) {
+void Matrix::operator=(const Table& table) {
+	this->table = table;
+	rows = table.size();
+	columns = table[0].size();
+}
+
+bool Matrix::operator==(const Matrix& mat) {
+	if (rows != mat.rows || columns != mat.columns) {
+		return false;
+	}
+
+	for (int i = 0; i < rows; ++i) {
+		for (int j = 0; j < columns; ++j) {
+			if (table[i][j] != mat[i][j]) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+std::vector<float>& Matrix::operator[](int row) {
+	return table[row];
+}
+
+const std::vector<float>& Matrix::operator[](int row) const {
 	return table[row];
 }
