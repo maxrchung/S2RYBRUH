@@ -22,7 +22,7 @@ public:
 	void Scale(int startTime, int endTime, float startScale, float endScale, Easing easing = Easing::Linear);
 	void ScaleVector(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing = Easing::Linear);
 	void ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2 endScale, Easing easing = Easing::Linear);
-	void Color(int startTime, int endTime, float startR, float startG, float startB, float endR, float endG, float endB, Easing easing = Easing::Linear);
+	void Color(int startTime, int endTime, int startR, int startG, int startB, int endR, int endG, int endB, Easing easing = Easing::Linear);
 	void Color(int startTime, int endTime, ::Color startColor, ::Color endColor, Easing easing = Easing::Linear);
 
 	void Write(std::ofstream& outputFile);
