@@ -12,7 +12,7 @@
 
 class Sprite {
 public:
-	Sprite(const std::string& filePath, Vector2 position = Vector2(320.0f, 240.0f), Layer layer = Layer::Foreground, Origin origin = Origin::Centre);
+	Sprite(const std::string& filePath, Vector2 position = Vector2::Zero, Layer layer = Layer::Foreground, Origin origin = Origin::Centre);
 	void Move(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing = Easing::Linear);
 	void Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear);
 	void MoveX(int startTime, int endTime, float startX, float endX, Easing easing);
@@ -30,6 +30,9 @@ public:
 	std::vector<std::string> commands;
 	float fade;
 	Vector2 position;
+	// This is needed for part of the Sprite header writing
+	// Only this and Move need to have the weird coordinate mismatch
+	Vector2 startPosition;
 	float rotation;
 	float scale;
 	::Color color;

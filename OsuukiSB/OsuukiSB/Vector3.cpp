@@ -96,20 +96,21 @@ Vector3 Vector3::RotateAround(Vector3 v, float rotAmount) {
 	return Vector3(rot * Matrix(*this));
 }
 
+// https://www.youtube.com/watch?v=QR8bt3gwH58
 Vector2 Vector3::Perspect(float cameraZ, float distance) {
 	Matrix perspective(4, 4);
 	perspective.table = {
 		{ 1, 0, 0,			0 },
 		{ 0, 1, 0,			0 },
 		{ 0, 0, 1,			0 },
-		{ 0, 0, 1/distance, 0 }
+		{ 0, 0, -1/distance, 0 }
 	};
 	// Adjust for camera position
 	Vector4 perspectee(this->x, this->y, this->z - cameraZ, 1);
 	Vector4 perspected = Vector4(perspective * Matrix(perspectee));
 	Vector2 perspectedDivided(perspected.x / perspected.w, perspected.y / perspected.w);
 
-	return Vector2::Midpoint + perspectedDivided;
+	return perspectedDivided;
 }
 
 Vector3 Vector3::operator-() {

@@ -15,7 +15,6 @@ public:
 	float Magnitude();
 	Vector3 Normalize();
 
-	// https://www.youtube.com/watch?v=QR8bt3gwH58
 	// Discount Projection
 	Vector2 Perspect(float cameraZ, float distance);
 

@@ -4,6 +4,8 @@
 
 Sprite::Sprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin)
 	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0f), color(Color::Color(0, 0, 0)) {
+	// Moved out for clarity
+	this->startPosition = Vector2(position.x, -position.y) + Vector2::Midpoint;
 	Storyboard::Instance()->sprites[layer].push_back(this);
 }
 
@@ -15,8 +17,11 @@ void Sprite::Move(int startTime, int endTime, float startX, float startY, float 
 
 	position.x = endX;
 	position.y = endY;
+	Vector2 offsetStart = Vector2::Midpoint + Vector2(startX, -startY);
+	Vector2 offsetEnd = Vector2::Midpoint + Vector2(endX, -endY);
+
 	std::ostringstream command;
-	command << "_M," << easing << "," << startTime << "," << endTime << "," << startX << "," << startY << "," << endX << "," << endY;
+	command << "_M," << easing << "," << startTime << "," << endTime << "," << offsetStart.x << "," << offsetStart.y << "," << offsetEnd.x << "," << offsetEnd.y;
 	commands.push_back(command.str());
 }
 
@@ -119,7 +124,7 @@ void Sprite::Color(int startTime, int endTime, ::Color startColor, ::Color endCo
 
 void Sprite::Write(std::ofstream& outputFile) {
 	// Sprite,<layer>,<origin>,"<filepath>",<x>,<y>
-	outputFile << "Sprite," << Layers[layer] << "," << Origins[origin] << ",\"" << filePath << "\"," << position.x << "," << position.y << std::endl;
+	outputFile << "Sprite," << Layers[layer] << "," << Origins[origin] << ",\"" << filePath << "\"," << startPosition.x << "," << startPosition.y << std::endl;
 	for (auto command : commands) {
 		outputFile << command << std::endl;
 	}

@@ -1,11 +1,19 @@
 #include "Vector2.hpp"
+#include "Vector3.hpp"
 #include "math.h"
 #include <iostream>
 
 Vector2 Vector2::Midpoint(320.0f, 240.0f);
+Vector2 Vector2::ScreenSize(853.0f, 480.0f);
+Vector2 Vector2::Zero(0.0f, 0.0f);
 
 Vector2::Vector2() 
 	: x(0), y(0) {
+}
+
+Vector2::Vector2(float rotation) 
+	: x(cos(rotation)), y(sin(rotation)) {
+
 }
 
 Vector2::Vector2(float x, float y)
@@ -30,23 +38,33 @@ float Vector2::Dot(Vector2 v) {
 }
 
 float Vector2::AngleBetween(Vector2 v) {
-	if (this->Magnitude() == 0 || v.Magnitude() == 0) {
-		throw "Magnitude of a vector is 0";
-	}
-	else if (this->Normalize() == v.Normalize()) {
+	Vector2 left = this->Normalize();
+	Vector2 right = v.Normalize();
+
+	if (left == right) {
 		return 0;
 	}
-	else {
-		float dot = this->Dot(v);
-		float dotOverMag = dot / (this->Magnitude() * v.Magnitude());
 
-		if (dotOverMag > 1.0f) {
-			dotOverMag = 1.0f;
-		}
-		else if (dotOverMag < -1.0f) {
-			dotOverMag = -1.0f;
-		}
-		return acos(dotOverMag);
+	float dot = left.Dot(right);
+
+	// Floating points check
+	if (dot > 1.0f) {
+		dot = 1.0f;
+	}
+	else if (dot < -1.0f) {
+		dot = -1.0f;
+	}
+
+	float rot = acos(dot);
+
+	// http://stackoverflow.com/questions/11022446/direction-of-shortest-rotation-between-two-vectors
+	// Use cross vector3 to determine direction
+	Vector3 cross = Vector3(left.x, left.y).Cross(Vector3(right.x, right.y));
+	if (cross.z > 0) {
+		return -rot;
+	}
+	else if (cross.z < 0) {
+		return rot;
 	}
 }
 
@@ -61,15 +79,16 @@ Vector2 Vector2::RotateAround(Vector2 origin, float rotation) {
 	Vector2 fromMid = *this - origin;
 	Vector2 unitVec(1, 0);
 	float angleFrom0 = fromMid.AngleBetween(unitVec);
-	if (fromMid.y < 0) {
-		angleFrom0 *= -1;
-	}
-	angleFrom0 += rotation;
+	angleFrom0 -= rotation;
 	Vector2 endMove(cos(angleFrom0), sin(angleFrom0));
 	endMove *= fromMid.Magnitude();
 	endMove = origin + endMove;
 
 	return endMove;
+}
+
+Vector2 Vector2::Rotate(float rotation) {
+	return RotateAround(Zero, rotation);
 }
 
 Vector2 Vector2::operator-() {
