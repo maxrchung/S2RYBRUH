@@ -10,6 +10,7 @@
 class Range {
 public:
 	Range(int start, int end);
+	explicit Range(int startEnd);
 	// Returns if start <= value <= end
 	bool Contains(int value);
 	int start;

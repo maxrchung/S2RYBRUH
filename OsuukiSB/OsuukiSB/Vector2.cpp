@@ -11,8 +11,9 @@ Vector2::Vector2()
 	: x(0), y(0) {
 }
 
+// Reverse y because of osu! coordinate system
 Vector2::Vector2(float rotation) 
-	: x(cos(rotation)), y(sin(rotation)) {
+	: x(cos(rotation)), y(-sin(rotation)) {
 
 }
 
