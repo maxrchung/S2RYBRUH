@@ -39,6 +39,10 @@ float Vector2::Dot(Vector2 v) {
 }
 
 float Vector2::AngleBetween(Vector2 v) {
+	if (this->Magnitude() == 0 || v.Magnitude() == 0) {
+		return 0;
+	}
+
 	Vector2 left = this->Normalize();
 	Vector2 right = v.Normalize();
 
@@ -64,7 +68,7 @@ float Vector2::AngleBetween(Vector2 v) {
 	if (cross.z > 0) {
 		return -rot;
 	}
-	else if (cross.z < 0) {
+	else if (cross.z <= 0) {
 		return rot;
 	}
 }
@@ -77,6 +81,10 @@ Vector2 Vector2::Project(Vector2 axis) {
 }
 
 Vector2 Vector2::RotateAround(Vector2 origin, float rotation) {
+	if (rotation == 0) {
+		return *this;
+	}
+
 	Vector2 fromMid = *this - origin;
 	Vector2 unitVec(1, 0);
 	float angleFrom0 = fromMid.AngleBetween(unitVec);
