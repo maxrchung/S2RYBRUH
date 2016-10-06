@@ -2,6 +2,8 @@
 #define VECTOR2_HPP
 
 #include "Vector3.hpp"
+#include <functional>
+#include <iostream>
 
 class Vector2 {
 public:
@@ -39,6 +41,13 @@ public:
 	bool operator==(Vector2 v);
 	bool operator!=(Vector2 v);
 
+	// For putting into sets?
+	const bool operator<(const Vector2 v) const;
+	const bool operator==(const Vector2 v) const;
+
+	// put
+	friend std::ostream& operator<<(std::ostream& os, const Vector2& vector);
+
 	float x;
 	float y;
 
@@ -47,5 +56,15 @@ private:
 	// Calculates rotation
 	float angleBetweenRotation(Vector2 v);
 };
+
+// Hash(?)?
+namespace std {
+	template<>
+	struct hash<Vector2> {
+		size_t operator()(const Vector2& value) const {
+			return (std::hash<float>()(value.x) * 0x1f1f1f1f) ^ (std::hash<float>()(value.y) << 1);
+		}
+	};
+}
 
 #endif//VECTOR2_HPP

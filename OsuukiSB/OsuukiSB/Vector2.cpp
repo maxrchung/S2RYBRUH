@@ -68,7 +68,7 @@ float Vector2::AngleBetween(Vector2 v) {
 	if (cross.z > 0) {
 		return -rot;
 	}
-	else if (cross.z <= 0) {
+	else {
 		return rot;
 	}
 }
@@ -155,4 +155,26 @@ bool Vector2::operator==(Vector2 v) {
 
 bool Vector2:: operator!=(Vector2 v) {
 	return !(*this == v);
+}
+
+const bool Vector2::operator<(const Vector2 v) const {
+	if (this->x < v.x) {
+		return true;
+	}
+	else if (this->x == v.x && this->y < v.y) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+const bool Vector2::operator==(const Vector2 v) const {
+	return x == v.x && y == v.y;
+}
+
+std::ostream& operator<<(std::ostream& os, const Vector2& vector)
+{
+	os << vector.x << " " << vector.y;
+	return os;
 }
