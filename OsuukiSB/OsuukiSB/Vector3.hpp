@@ -12,6 +12,7 @@ public:
 	float AngleBetween(Vector3 v);
 	Vector3 Cross(Vector3 v);
 	float Dot(Vector3 v);
+	Vector3 Project(Vector3 axis);
 	float Magnitude();
 	Vector3 Normalize();
 
@@ -28,9 +29,12 @@ public:
 	Vector3 operator+(Vector3 rhs);
 	Vector3 operator-(Vector3 rhs);
 	Vector3 operator*(float rhs);
+	Vector3 operator/(float rhs);
 	void operator+=(Vector3 rhs);
 	void operator-=(Vector3 rhs);
 	void operator*=(float rhs);
+	void operator/=(float rhs);
+	void operator*=(Vector3 rhs);
 
 	static Vector3 Zero;
 

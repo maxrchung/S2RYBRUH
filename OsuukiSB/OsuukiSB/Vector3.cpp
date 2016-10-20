@@ -42,6 +42,13 @@ float Vector3::Dot(Vector3 v) {
 	return x*v.x + y*v.y + z*v.z;
 }
 
+Vector3 Vector3::Project(Vector3 axis) {
+	Vector3 projection = Vector3(this->Dot(axis), this->Dot(axis), this->Dot(axis));
+	projection /= (axis.x * axis.x) + (axis.y * axis.y) + (axis.z * axis.z);
+	projection *= axis;
+	return projection;
+}
+
 float Vector3::Magnitude() {
 	return sqrt(x * x + y * y + z * z);
 }
@@ -129,6 +136,10 @@ Vector3 Vector3::operator*(float rhs) {
 	return Vector3(x * rhs, y * rhs, z * rhs);
 }
 
+Vector3 Vector3::operator/(float rhs) {
+	return Vector3(x / rhs, y / rhs, z / rhs);
+}
+
 void Vector3::operator+=(Vector3 rhs) {
 	*this = *this + rhs;
 }
@@ -137,6 +148,12 @@ void Vector3::operator-=(Vector3 rhs) {
 	*this = *this - rhs;
 }
 
-void Vector3::operator*=(float rhs) {
-	*this = *this * rhs;
+void Vector3::operator/=(float rhs) {
+	*this = *this / rhs;
+}
+
+void Vector3::operator*=(Vector3 rhs) {
+	x *= rhs.x;
+	y *= rhs.y;
+	z *= rhs.z;
 }
