@@ -5,8 +5,8 @@
 
 enum Easing {
 	Linear,
-	EasingOut,
-	EasingIn,
+	EasingOut, // Same as QuadOut - cl8n
+	EasingIn, // Same as QuadIn - cl8n
 	QuadIn,
 	QuadOut,
 	QuadInOut,
