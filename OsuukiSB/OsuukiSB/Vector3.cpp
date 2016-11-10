@@ -157,3 +157,9 @@ void Vector3::operator*=(Vector3 rhs) {
 	y *= rhs.y;
 	z *= rhs.z;
 }
+
+void Vector3::operator*=(float rhs) {
+	x *= rhs;
+	y *= rhs;
+	z *= rhs;
+}
