@@ -24,6 +24,7 @@ public:
 	void ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2 endScale, Easing easing = Easing::Linear);
 	void Color(int startTime, int endTime, int startR, int startG, int startB, int endR, int endG, int endB, Easing easing = Easing::Linear);
 	void Color(int startTime, int endTime, ::Color startColor, ::Color endColor, Easing easing = Easing::Linear);
+	void Loop(int startTime, int loopCount, const std::vector<std::string>& loopCommands);
 
 	void Write(std::ofstream& outputFile);
 

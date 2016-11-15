@@ -36,8 +36,11 @@ void Sprite::MoveX(int startTime, int endTime, float startX, float endX, Easing 
 	}
 
 	position.x = endX;
+	float offsetStart = Vector2::Midpoint.x + startX;
+	float offsetEnd = Vector2::Midpoint.x + endX;
+
 	std::ostringstream command;
-	command << "_MX," << easing << "," << startTime << "," << endTime << "," << startX << "," << endX;
+	command << "_MX," << easing << "," << startTime << "," << endTime << "," << offsetStart << "," << offsetEnd;
 	commands.push_back(command.str());
 }
 
@@ -48,8 +51,11 @@ void Sprite::MoveY(int startTime, int endTime, float startY, float endY, Easing 
 	}
 
 	position.y = endY;
+	float offsetStart = Vector2::Midpoint.y + startY;
+	float offsetEnd = Vector2::Midpoint.y + endY;
+
 	std::ostringstream command;
-	command << "_MY," << easing << "," << startTime << "," << endTime << "," << startY << "," << endY;
+	command << "_MY," << easing << "," << startTime << "," << endTime << "," << offsetStart << "," << offsetEnd;
 	commands.push_back(command.str());
 }
 
@@ -120,6 +126,18 @@ void Sprite::Color(int startTime, int endTime, int startR, int startG, int start
 
 void Sprite::Color(int startTime, int endTime, ::Color startColor, ::Color endColor, Easing easing) {
 	Sprite::Color(startTime, endTime, startColor.r, startColor.g, startColor.b, endColor.r, endColor.g, endColor.b, easing);
+}
+
+//_L, <starttime>, <loopcount>
+//__<event>, <easing>, <relative_starttime>, <relative_endtime>, <params...>
+void Sprite::Loop(int startTime, int loopCount, const std::vector<std::string>& loopCommands) {
+	std::ostringstream command;
+	command << "_L," << startTime << "," << loopCount;
+	commands.push_back(command.str());
+
+	for (auto& loopCommand : loopCommands) {
+		commands.push_back(loopCommand);
+	}
 }
 
 void Sprite::Write(std::ofstream& outputFile) {
