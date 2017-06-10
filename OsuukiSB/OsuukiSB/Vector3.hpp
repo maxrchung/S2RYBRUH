@@ -8,7 +8,7 @@ class Vector3 {
 public:
 	explicit Vector3(Matrix m);
 	explicit Vector3(Vector2 v);
-	Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f);
+	explicit Vector3(float x = 0.0f, float y = 0.0f, float z = 0.0f);
 	float AngleBetween(Vector3 v);
 	Vector3 Cross(Vector3 v);
 	float Dot(Vector3 v);
@@ -35,6 +35,7 @@ public:
 	void operator*=(float rhs);
 	void operator/=(float rhs);
 	void operator*=(Vector3 rhs);
+	bool operator==(Vector3 rhs);
 
 	static Vector3 Zero;
 

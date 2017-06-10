@@ -24,8 +24,6 @@ public:
 	Vector2 RotateAround(Vector2 origin, float rotation);
 	// Calls the above with Midpoint
 	Vector2 Rotate(float rotation);
-	// Flips y
-	Vector2 ToScreen();
 
 	Vector2 operator-();
 	Vector2 operator+(Vector2 v);
@@ -50,11 +48,6 @@ public:
 
 	float x;
 	float y;
-
-private:
-	// Helper for AngleBetween
-	// Calculates rotation
-	float angleBetweenRotation(Vector2 v);
 };
 
 // Hash(?)?

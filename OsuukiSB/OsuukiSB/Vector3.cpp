@@ -158,6 +158,11 @@ void Vector3::operator*=(Vector3 rhs) {
 	z *= rhs.z;
 }
 
+bool Vector3::operator==(Vector3 rhs)
+{
+	return (x == rhs.x && y == rhs.y && z == rhs.z);
+}
+
 void Vector3::operator*=(float rhs) {
 	x *= rhs;
 	y *= rhs;
