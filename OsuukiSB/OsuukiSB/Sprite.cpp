@@ -1,9 +1,10 @@
 #include "Sprite.hpp"
 #include "Storyboard.hpp"
+#include <iomanip>
 #include <sstream>
 
 Sprite::Sprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin)
-	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0f), color(Color::Color(0, 0, 0)), fade(1.0f) {
+	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0f), color(Color::Color(255)), fade(1.0f) {
 	// Moved out for clarity
 	this->startPosition = Vector2(position.x, -position.y) + Vector2::Midpoint;
 	Storyboard::Instance()->sprites[layer].push_back(this);
@@ -21,7 +22,7 @@ void Sprite::Move(int startTime, int endTime, float startX, float startY, float 
 	Vector2 offsetEnd = Vector2::Midpoint + Vector2(endX, -endY);
 
 	std::ostringstream command;
-	command << "_M," << easing << "," << startTime << "," << endTime << "," << offsetStart.x << "," << offsetStart.y << "," << offsetEnd.x << "," << offsetEnd.y;
+	command << "_M," << easing << "," << startTime << "," << endTime << "," << (int)offsetStart.x << "," << (int)offsetStart.y << "," << (int)offsetEnd.x << "," << (int)offsetEnd.y;
 	commands.push_back(command.str());
 }
 
@@ -36,8 +37,8 @@ void Sprite::MoveX(int startTime, int endTime, float startX, float endX, Easing 
 	}
 
 	position.x = endX;
-	float offsetStart = Vector2::Midpoint.x + startX;
-	float offsetEnd = Vector2::Midpoint.x + endX;
+	int offsetStart = Vector2::Midpoint.x + startX;
+	int offsetEnd = Vector2::Midpoint.x + endX;
 
 	std::ostringstream command;
 	command << "_MX," << easing << "," << startTime << "," << endTime << "," << offsetStart << "," << offsetEnd;
@@ -51,8 +52,8 @@ void Sprite::MoveY(int startTime, int endTime, float startY, float endY, Easing 
 	}
 
 	position.y = endY;
-	float offsetStart = Vector2::Midpoint.y + startY;
-	float offsetEnd = Vector2::Midpoint.y + endY;
+	int offsetStart = Vector2::Midpoint.y + startY;
+	int offsetEnd = Vector2::Midpoint.y + endY;
 
 	std::ostringstream command;
 	command << "_MY," << easing << "," << startTime << "," << endTime << "," << offsetStart << "," << offsetEnd;
@@ -72,60 +73,61 @@ void Sprite::Fade(int startTime, int endTime, float startOpacity, float endOpaci
 }
 
 // _R,<easing>,<starttime>,<endtime>,<start_rotate>,<end_rotate>
-void Sprite::Rotate(int startTime, int endTime, float startRotate, float endRotate, Easing easing) {
+void Sprite::Rotate(int startTime, int endTime, float startRotate, float endRotate, Easing easing, int precision) {
 	if (endTime > this->endTime) {
 		this->endTime = endTime;
 	}
 
 	rotation = endRotate;
 	std::ostringstream command;
-	command << "_R," << easing << "," << startTime << "," << endTime << "," << startRotate << "," << endRotate;
+	command << std::setprecision(precision) << std::fixed << "_R," << easing << "," << startTime << "," << endTime << "," << startRotate << "," << endRotate;
 	commands.push_back(command.str());
 }
 
 // _S,<easing>,<starttime>,<endtime>,<start_scale>,<end_scale>
-void Sprite::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing) {
+void Sprite::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing, int precision) {
 	if (endTime > this->endTime) {
 		this->endTime = endTime;
 	}
 
 	scale = endScale;
 	std::ostringstream command;
-	command << "_S," << easing << "," << startTime << "," << endTime << "," << startScale << "," << endScale;
+	command << std::setprecision(precision) << std::fixed << "_S," << easing << "," << startTime << "," << endTime << "," << startScale << "," << endScale;
 	commands.push_back(command.str());
 }
 
 // _V,<easing>,<starttime>,<endtime>,<start_scale_x>,<start_scale_y>,<end_scale_x>,<end_scale_y>
-void Sprite::ScaleVector(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing) {
+void Sprite::ScaleVector(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing, int precision) {
 	if (endTime > this->endTime) {
 		this->endTime = endTime;
 	}
 
 	scaleVector.x = endX;
 	scaleVector.y = endY;
+
 	std::ostringstream command;
-	command << "_V," << easing << "," << startTime << "," << endTime << "," << startX << "," << startY << "," << endX << "," << endY;
+	command << std::setprecision(precision) << std::fixed << "_V," << easing << "," << startTime << "," << endTime << "," << startX << "," << startY << "," << endX << "," << endY;
 	commands.push_back(command.str());
 }
 
-void Sprite::ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2 endScale, Easing easing) {
-	Sprite::ScaleVector(startTime, endTime, startScale.x, startScale.y, endScale.x, endScale.y, easing);
+void Sprite::ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2 endScale, Easing easing, int precision) {
+	Sprite::ScaleVector(startTime, endTime, startScale.x, startScale.y, endScale.x, endScale.y, easing, precision);
 }
 
 // _C,<easing>,<starttime>,<endtime>,<start_r>,<start_g>,<start_b>,<end_r>,<end_g>,<end_b>
-void Sprite::Color(int startTime, int endTime, int startR, int startG, int startB, int endR, int endG, int endB, Easing easing) {
+void Sprite::Color(int startTime, int endTime, int startR, int startG, int startB, int endR, int endG, int endB, Easing easing, int precision) {
 	if (endTime > this->endTime) {
 		this->endTime = endTime;
 	}
 
 	color = Color::Color(endR, endG, endB);
 	std::ostringstream command;
-	command << "_C," << easing << "," << startTime << "," << endTime << "," << startR << "," << startG << "," << startB << "," << endR << "," << endG << "," << endB;
+	command << std::setprecision(precision) << std::fixed << "_C," << easing << "," << startTime << "," << endTime << "," << startR << "," << startG << "," << startB << "," << endR << "," << endG << "," << endB;
 	commands.push_back(command.str());
 }
 
-void Sprite::Color(int startTime, int endTime, ::Color startColor, ::Color endColor, Easing easing) {
-	Sprite::Color(startTime, endTime, startColor.r, startColor.g, startColor.b, endColor.r, endColor.g, endColor.b, easing);
+void Sprite::Color(int startTime, int endTime, ::Color startColor, ::Color endColor, Easing easing, int precision) {
+	Sprite::Color(startTime, endTime, startColor.r, startColor.g, startColor.b, endColor.r, endColor.g, endColor.b, easing, precision);
 }
 
 //_L, <starttime>, <loopcount>
