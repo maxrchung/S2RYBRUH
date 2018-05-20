@@ -1,5 +1,4 @@
-#ifndef MUSICANALYSISCONFIG_HPP
-#define MUSICANALYSISCONFIG_HPP
+#pragma once
 
 #include <string>
 
@@ -14,8 +13,8 @@ struct MusicAnalysisConfig {
 	std::string dataPath;
 
 	// What frequency bands to start and end on
-	int freqBandStart;
 	int freqBandEnd;
+	int freqBandStart;
 	// Number of band separations we want for the spectrum, i.e. number of bars
 	int divisions;
 
@@ -23,5 +22,3 @@ struct MusicAnalysisConfig {
 	// read samples every second
 	int snapshotRate;
 };
-
-#endif//MUSICANALYSISCONFIG_HPP

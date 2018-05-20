@@ -23,17 +23,17 @@ bool Color::operator!=(Color c) {
 	return !(*this == c);
 }
 
-Color Color::operator/(float f) {
+Color Color::operator/(float f) const {
 	return Color(r / f, g / f, b / f);
 }
 
-Color Color::operator*(float f) {
+Color Color::operator*(float f) const {
 	return Color(r * f, g * f, b * f);
 }
 
-Color Color::operator+(Color a) {
+Color Color::operator+(Color a) const {
 	return Color((r + a.r), (g + a.g), (b + a.b));
 }
-Color Color::operator-(Color a) {
+Color Color::operator-(Color a) const {
 	return Color((r - a.r), (g - a.g), (b - a.b));
 }

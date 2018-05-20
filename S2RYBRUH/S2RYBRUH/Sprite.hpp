@@ -1,14 +1,13 @@
-#ifndef SPRITE_HPP
-#define SPRITE_HPP
+#pragma once
 
-#include <vector>
-#include <string>
+#include "Color.hpp"
+#include "Easing.hpp"
 #include "Layer.hpp"
 #include "Origin.hpp"
 #include "Vector2.hpp"
-#include "Easing.hpp"
 #include <fstream>
-#include "Color.hpp"
+#include <string>
+#include <vector>
 
 class Sprite {
 public:
@@ -26,23 +25,19 @@ public:
 	void Color(int startTime, int endTime, ::Color startColor, ::Color endColor, Easing easing = Easing::Linear, int precision = 3);
 	void Loop(int startTime, int loopCount, const std::vector<std::string>& loopCommands);
 
-	void Write(std::ofstream& outputFile);
-
 	std::vector<std::string> commands;
-	float fade;
+	float fade = 1.0f;
 	Vector2 position;
 	// This is needed for part of the Sprite header writing
 	// Only this and Move need to have the weird coordinate mismatch
 	Vector2 startPosition;
-	float rotation;
-	float scale;
-	::Color color;
-	Vector2 scaleVector;
+	float rotation = 0.0f;
+	float scale = 1.0f;
+	::Color color = Color::Color(255);
+	Vector2 scaleVector = Vector2(1.0f, 1.0f);
 	// Indicates when the sprite will no longer be on screen
 	int endTime;
 	Layer layer;
 	Origin origin;
 	std::string filePath;
 };
-
-#endif//SPRITE_HPP

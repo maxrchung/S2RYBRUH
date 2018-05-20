@@ -1,5 +1,4 @@
-#ifndef VECTOR2_HPP
-#define VECTOR2_HPP
+#pragma once
 
 #include "Vector3.hpp"
 #include <functional>
@@ -59,5 +58,3 @@ namespace std {
 		}
 	};
 }
-
-#endif//VECTOR2_HPP
