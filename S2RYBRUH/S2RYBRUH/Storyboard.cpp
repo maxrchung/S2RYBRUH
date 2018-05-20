@@ -3,19 +3,18 @@
 #include <iostream>
 #include <stddef.h>
 
- std::vector<std::vector<Sprite>> Storyboard::sprites;
+ std::vector<std::vector<std::unique_ptr<Sprite>>> Storyboard::sprites;
 
 void Storyboard::Clear() {
 	sprites.clear();
 	for (int i = 0; i < static_cast<int>(Layer::Count); ++i) {
-		sprites.push_back(std::vector<Sprite>());
+		sprites.push_back(std::vector<std::unique_ptr<Sprite>>());
 	}
 }
 
-Sprite& Storyboard::CreateSprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin) {
-	auto sprite = Sprite(filePath, position, layer, origin);
-	sprites[static_cast<int>(layer)].push_back(sprite);
-	return sprites[static_cast<int>(layer)].back();
+Sprite* Storyboard::CreateSprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin) {
+	sprites[static_cast<int>(layer)].push_back(std::make_unique<Sprite>(filePath, position, layer, origin));
+	return sprites[static_cast<int>(layer)].back().get();
 }
 
 void Storyboard::Write(const std::string& destinationPath) {
@@ -28,10 +27,10 @@ void Storyboard::Write(const std::string& destinationPath) {
 
 	for (int i = 0; i < static_cast<int>(Layer::Count); ++i) {
 		outputFile << "//Storyboard Layer " << i << " (" << Layers[i] << ")" << std::endl;
-		for (auto sprite : sprites[i]) {
+		for (const auto& sprite : sprites[i]) {
 			// Sprite,<layer>,<origin>,"<filepath>",<x>,<y>
-			outputFile << "Sprite," << Layers[static_cast<int>(sprite.layer)] << "," << Origins[static_cast<int>(sprite.origin)] << ",\"" << sprite.filePath << "\"," << sprite.startPosition.x << "," << sprite.startPosition.y << std::endl;
-			for (auto command : sprite.commands) {
+			outputFile << "Sprite," << Layers[static_cast<int>(sprite->layer)] << "," << Origins[static_cast<int>(sprite->origin)] << ",\"" << sprite->filePath << "\"," << sprite->startPosition.x << "," << sprite->startPosition.y << std::endl;
+			for (auto command : sprite->commands) {
 				outputFile << command << std::endl;
 			}
 		}
