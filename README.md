@@ -13,7 +13,10 @@ sprite = Storyboard::CreateSprite("image.png");
 
 // Calling Sprite command
 // Basic commands: Move, MoveX, MoveY, Fade, Rotate, Scale, ScaleVector, Color
-// Position (0,0,0) is the center of the screen, with positive-x going right, positive-y going up, and positive-z going towards you
+// Position (0, 0, 0) is the center of the screen
+// +x goes right
+// +y goes up
+// +z goes towards you
 sprite->Move(0, 10000, Vector2::Zero, Vector2(100.0f, 100.0f), Easing::Linear);
 sprite->Move(0, 10000, 0.0f, 0.0f, 100.0f, 100.0f, Easing::Linear);
 sprite->Move(0, 10000, 0.0f, 0.0f, 100.0f, 100.0f);
@@ -30,7 +33,8 @@ Vector2 rotate2 = Vector2(1, 0).Rotate(3.14159f / 2.0f);
 // How 3D rotation direction works: 
 // 1). Point your index finger at the positive rotation axis. 
 // 2). Stick out your thumb out in an L shape. The tip of your thumb is where your point is.
-// 3). Rotate your hand clockwise.
+// 3). Rotate your hand clockwise around index finger.
+// 4). The tip of your thumb is the rotated position.
 Vector3 rotate3 = Vector2(1, 0, 0).RotateY(3.14159f / 2.0f);
 
 // Writing out to file
