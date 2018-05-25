@@ -2,12 +2,6 @@
 #include <iomanip>
 #include <sstream>
 
-Sprite::Sprite(const std::string& filePath, Vector2 position, Layer layer, Origin origin)
-	: layer(layer), origin(origin), filePath(filePath), position(position), scale(1.0f), scaleVector(1.0f, 1.0f), rotation(0.0f), color(Color::Color(255)), fade(1.0f) {
-	// Moved out for clarity
-	this->startPosition = Vector2(position.x, -position.y) + Vector2::Midpoint;
-}
-
 // _M,<easing>,<starttime>,<endtime>,<start_x>,<start_y>,<end_x>,<end_y>
 void Sprite::Move(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing) {
 	if (endTime > this->endTime) {
