@@ -16,6 +16,19 @@ enum class Origin {
 	Count
 };
 
-extern std::string Origins[];
+static std::string* Origins() {
+	static std::string origins[static_cast<int>(Origin::Count)] = {
+		"TopLeft",
+		"TopCentre",
+		"TopRight",
+		"CentreLeft",
+		"Centre",
+		"CentreRight",
+		"BottomLeft",
+		"BottomCentre",
+		"BottomRight"
+	};
+	return origins;
+}
 
 #endif//ORiGIN_HPP

@@ -44,8 +44,8 @@ void Sprite::MoveY(int startTime, int endTime, float startY, float endY, Easing 
 	}
 
 	position.y = endY;
-	int offsetStart = Vector2::Midpoint.y + startY;
-	int offsetEnd = Vector2::Midpoint.y + endY;
+	int offsetStart = Vector2::Midpoint.y - startY;
+	int offsetEnd = Vector2::Midpoint.y - endY;
 
 	std::ostringstream command;
 	command << "_MY," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << offsetStart << "," << offsetEnd;

@@ -19,15 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bezier.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Easing.cpp" />
     <ClCompile Include="kiss_fft.c" />
     <ClCompile Include="kiss_fftr.c" />
-    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MusicAnalysis.cpp" />
     <ClCompile Include="MusicAnalysisData.cpp" />
-    <ClCompile Include="Origin.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Storyboard.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -37,6 +35,7 @@
     <ClCompile Include="Wav.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bezier.hpp" />
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Easing.hpp" />
     <ClInclude Include="kiss_fft.h" />

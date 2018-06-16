@@ -6,7 +6,7 @@
 class Color {
 public:
 	Color();
-	Color(float v);
+	explicit Color(float v);
 	Color(float r, float g, float b);
 	float r = 0.0f;
 	float g = 0.0f;
