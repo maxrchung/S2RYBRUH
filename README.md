@@ -35,11 +35,13 @@ Vector2 rotate2 = Vector2(1, 0).Rotate(3.14159f / 2.0f);
 // 2). Stick out your thumb out in an L shape. The tip of your thumb is where your point is.
 // 3). Rotate your hand clockwise around index finger.
 // 4). The tip of your thumb is the rotated position.
-Vector3 rotate3 = Vector2(1, 0, 0).RotateY(3.14159f / 2.0f);
+Vector3 rotate3 = Vector3(1, 0, 0).RotateY(3.14159f / 2.0f);
 
 // Writing out to file
 Storyboard::Write(R"(X:\osu!\Songs\525470 Quarks - Dualive\Quarks - Dualive(niseboi).osb)");
+```
 
+```cpp
 // Basic support for FFT/spectrums is provided by generating music data to a file and then loading from it
 // Generating should be done from a separate project so as to reuse the data
 #include "MusicAnalysis.hpp"
